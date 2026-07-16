@@ -1,14 +1,14 @@
 """
-IDCM — Comprehensive Spectrum Validation (Comprehensive Validation)
-====================================================================
-1.  Lagrangian inversion: V(phi) from w(z)
-2.  Weak lensing S8 constraint
-3.  Growth rate f_sig8(z) full curve + residuals
-4.  Galaxy cluster abundance approximation
-5.  Strong lensing time-delay H0 consistency
-6.  Full chi2 summary table
+IDCM — 完整廣譜驗證 (Comprehensive Validation)
+=====================================================
+1.  Lagrangian 反推: V(φ) from w(z)
+2.  弱透鏡 S₈ 約束
+3.  生長率 fσ₈(z) 全曲線 + 殘差
+4.  星系團豐度近似
+5.  強透鏡時延 H₀ 一致性
+6.  完整 χ² 總表
 
-Pure numpy/scipy. No LLM involved in numerical computation.
+純 numpy/scipy. 無 LLM 參與數值計算。
 """
 
 import numpy as np
@@ -22,16 +22,16 @@ EPS = (np.sqrt(5) - 1) / 8
 ZC = 0.6
 C = 299792.458
 
-# IDCM posterior parameters
+# IDCM 後驗參數
 Om, h, ombh2, sig8 = 0.3045, 0.6821, 0.02237, 0.780
 ODE = 1 - Om
 H0 = h * 100
 
 print("=" * 68)
-print("IDCM — Comprehensive Validation")
+print("IDCM — 廣譜驗證")
 print("=" * 68)
 
-# ═══ Model Core ═══
+# ═══ 模型核心 ═══
 def f_de(z):
     x = z / ZC
     return 1.0 + EPS * x * np.exp(-x)
@@ -43,45 +43,45 @@ def H(z):
     return H0 * np.sqrt(E2(z))
 
 def w_DE(z):
-    """Dark energy equation of state"""
+    """暗能量狀態方程"""
     x = z / ZC
     fp = EPS/ZC * np.exp(-x) * (1 - x)
     return -1.0 + (1+z)/3.0 * fp / f_de(z)
 
 def DM(z):
-    """Comoving distance Mpc"""
+    """共動距離 Mpc"""
     return quad(lambda zp: C/np.sqrt(E2(zp)), 0, z, limit=500)[0] / h
 
 # ═══════════════════════════════════════
-# 1. LAGRANGIAN INVERSION: V(phi)
+# 1. LAGRANGIAN 反推: V(φ)
 # ═══════════════════════════════════════
 print(f"\n{'─'*68}")
-print("1. Lagrangian Inversion (V(phi) from w(z))")
+print("1. 拉格朗日量反推 (V(φ) from w(z))")
 print(f"{'─'*68}")
 
-# For scalar field DE: w = (phi_dot^2/2 - V)/(phi_dot^2/2 + V)
-# rho_phi = phi_dot^2/2 + V
-# Continuity equation: rho_dot_phi + 3H(1+w)rho_phi = 0
-# -> phi_dot^2 = (1+w)rho_phi
-# -> V = (1-w)rho_phi/2
+# 對於標量場 DE: w = (φ̇²/2 - V)/(φ̇²/2 + V)
+# ρ_φ = φ̇²/2 + V
+# 連線方程: ρ̇_φ + 3H(1+w)ρ_φ = 0
+# → φ̇² = (1+w)ρ_φ
+# → V = (1-w)ρ_φ/2
 
-# rho_DE(z) at z=0: rho_DE0 = 3H0^2 Omega_DE/(8piG) [in natural units]
-# Using M_Pl = 1 units: rho_DE0 = 3H0^2 Omega_DE
-# Actually, rho_DE(z) normalized: rho_DE(z) = rho_DE0 × f(z)
-# H^2/H0^2 = Omega_m(1+z)^3 + Omega_DE·f(z)
+# ρ_DE(z) at z=0: ρ_DE0 = 3H₀²Ω_DE/(8πG)  [in natural units]
+# 用 M_Pl = 1 單位: ρ_DE0 = 3H₀²Ω_DE
+# Actually, ρ_DE(z) normalized: ρ_DE(z) = ρ_DE0 × f(z)
+# H²/H₀² = Ω_m(1+z)³ + Ω_DE·f(z)
 
 # For Lagrangian, we work in units where M_Pl = 1
-# rho_DE(z) = 3H0^2 Omega_DE × f(z) / (8pi) [natural units]
-# But for V(phi) we only care about the SHAPE
+# ρ_DE(z) = 3H₀²Ω_DE × f(z) / (8π)  ← natural units
+# But for V(φ) we only care about the SHAPE
 
-# Normalize to M_Pl=1, then rho_crit = 3H0^2 = 3(h×100/299792.458)^2 in Mpc^-2
-# Actually simpler: work with dimensionless rho/rho_crit
+# Normalize to M_Pl=1, then ρ_crit = 3H₀² = 3(h×100/299792.458)² in Mpc⁻²
+# Actually simpler: work with dimensionless ρ/ρ_crit
 
 rho_DE0 = ODE  # in units of critical density today
 print(f"  ρ_DE(z=0) = {rho_DE0:.4f} × ρ_crit")
 print(f"  Ω_DE = {ODE:.4f}")
 
-# phi field: dphi/dz = +/- sqrt((1+w)rho_DE) / ((1+z)H)
+# φ field: dφ/dz = ±√((1+w)ρ_DE) / ((1+z)H)
 # Plus sign for tracking solution
 
 def dphi_dz(z):
@@ -95,15 +95,15 @@ def V_z(z):
     w = w_DE(z)
     rho = rho_DE0 * f_de(z)
     if 1+w < 0:
-        # In phantom regime, V > rho (classical instability)
+        # In phantom regime, V > ρ (classical instability)
         # Still compute for the record
         return (1 - w) * rho / 2
     return (1 - w) * rho / 2
 
-# Integrate phi(z)
+# Integrate φ(z)
 z_grid = np.linspace(0, 3, 61)
 phi_vals = np.zeros_like(z_grid)
-phi_vals[0] = 0  # phi(z=0) = 0 convention
+phi_vals[0] = 0  # φ(z=0) = 0 convention
 
 for i in range(1, len(z_grid)):
     dz = z_grid[i] - z_grid[i-1]
@@ -126,7 +126,7 @@ print(f"    V(z_c={ZC}) = {V_trans:.6f} (w=-1 crossing)")
 print(f"    ΔV/V = {(V_trans-V_0)/V_0*100:+.2f}%")
 print(f"    φ(z_c) ≈ {phi_trans:.3f} M_Pl")
 
-# Fit to simple form: V(phi) = V0 + V1·phi·exp(-phi/phi_c)
+# Fit to simple form: V(φ) = V₀ + V₁·φ·exp(-φ/φ_c)
 try:
     from scipy.optimize import curve_fit
     def V_model(phi, V0, V1, phi_c):
@@ -145,16 +145,16 @@ except:
 print(f"\n  ✅ Lagrangian inversion complete")
 
 # ═══════════════════════════════════════
-# 2. WEAK LENSING S8 CONSTRAINT
+# 2. 弱透鏡 S₈ 約束
 # ═══════════════════════════════════════
 print(f"\n{'─'*68}")
-print("2. Weak Lensing S8 Constraint")
+print("2. 弱透鏡 S₈ 約束")
 print(f"{'─'*68}")
 
 S8_idm = sig8 * np.sqrt(Om / 0.3)
 print(f"  IDCM: S₈ = σ₈√(Ω_m/0.3) = {sig8:.3f}×√({Om:.3f}/0.3) = {S8_idm:.4f}")
-print(f"\n  Observational comparison:")
-print(f"  {'Survey':<20} {'S₈':<10} {'Ω_m':<10} {'Ref':<15}")
+print(f"\n  觀測比較:")
+print(f"  {'組':<20} {'S₈':<10} {'Ω_m':<10} {'Ref':<15}")
 print(f"  {'─'*20} {'─'*10} {'─'*10} {'─'*15}")
 
 surveys = [
@@ -177,13 +177,13 @@ for name, s8_str, om_str, ref in surveys[1:]:
     print(f"    vs {name:<15}: pull = {pull:+.1f}σ {'✅' if abs(pull)<2 else '⚠️'}")
 
 # ═══════════════════════════════════════
-# 3. GROWTH RATE f_sig8(z) FULL CURVE
+# 3. 生長率 fσ₈(z) 全曲線
 # ═══════════════════════════════════════
 print(f"\n{'─'*68}")
-print("3. Growth Rate fσ₈(z) Full Curve + Residuals")
+print("3. 生長率 fσ₈(z) 全曲線 + 殘差")
 print(f"{'─'*68}")
 
-# f_sig8(z) = sig8 × Omega_m(z)^0.55 × D(z)/D(0)
+# fσ₈(z) = σ₈ × Ω_m(z)^0.55 × D(z)/D(0)
 def f_s8(z):
     omz = Om*(1+z)**3 / E2(z)
     f = omz ** 0.55
@@ -194,7 +194,7 @@ def f_s8(z):
     Dz = np.exp(-growth_int)
     return sig8 * f * Dz
 
-# Compiled comparison with IDCM
+# 編譯與 IDCM 的比較
 RSD_DATA = [
     (0.020, 0.314, 0.048, "2MRS"),
     (0.020, 0.398, 0.065, "2MRS"),
@@ -229,35 +229,35 @@ for z_val, fs_o, err, name in RSD_DATA:
     print(f"{name:<15} {z_val:5.3f} {fs_o:9.3f} {fs_m:9.3f} {pull:+5.1f}σ")
 
 print(f"\n  RSD χ² = {chi2_rsd:.1f} ({len(RSD_DATA)} data points, 1 free param σ₈)")
-print(f"  ✅ All survey data within ±2.3σ")
+print(f"  ✅ 所有巡天數據在 ±2.3σ 內")
 
 # ═══════════════════════════════════════
-# 4. GALAXY CLUSTER ABUNDANCE APPROXIMATION
+# 4. 星系團豐度近似
 # ═══════════════════════════════════════
 print(f"\n{'─'*68}")
-print("4. Galaxy Cluster Abundance Approximation")
+print("4. 星系團豐度近似")
 print(f"{'─'*68}")
 
-# Using Tinker+2008 mass function
-# Key quantities: sigma(R,z), growth factor D(z), matter power spectrum normalization sig8
-# Approximation: cluster abundance ~ sig8^8 × Omega_m^3 (rough)
+# 使用 Tinker+2008 mass function
+# 關鍵量: σ(R,z), 增長因數 D(z), 物質功率譜歸一化 σ₈
+# 近似: 星系團豐度 ~ σ₈^8 × Ω_m^3 (粗略)
 
-# IDCM vs LCDM cluster abundance ratio
-# Main factors: sig8(z) and Omega_m
+# IDCM vs ΛCDM 的團豐度比
+# 主要影響因子: σ₈(z) 和 Ω_m
 N_cluster_ratio = (sig8/0.783)**8 * (Om/0.2963)**3
-print(f"  Approximate cluster abundance ratio IDCM vs ΛCDM:")
-print(f"    N_cluster_IDCM / N_cluster_ΛCDM ≈ (σ₈)^8 × (Ω_m)³")
+print(f"  IDCM vs ΛCDM 的近似團豐度比:")
+print(f"    N_cluster_IDCM / N_cluster_ΛCDM ≈ (σ₈)^{{8}} × (Ω_m)³")
 print(f"    = ({sig8:.3f}/0.783)^8 × ({Om:.4f}/0.2963)³")
 print(f"    = {N_cluster_ratio:.3f} ({N_cluster_ratio-1:.1%})")
 
-print(f"\n  SPT/Planck cluster count precision ∼10%")
-print(f"  IDCM deviation {abs(N_cluster_ratio-1)*100:.1f}% {'< 10% ✅ within measurement precision' if abs(N_cluster_ratio-1)*100<10 else '> 10% ⚠️ needs detailed analysis'}")
+print(f"\n  SPT/Planck 團計數精度 ∼10%")
+print(f"  IDCM 偏差 {abs(N_cluster_ratio-1)*100:.1f}% {'< 10% ✅ 在測量精度內' if abs(N_cluster_ratio-1)*100<10 else '> 10% ⚠️ 需要詳細分析'}")
 
 # ═══════════════════════════════════════
-# 5. STRONG LENSING TIME-DELAY H0
+# 5. 強透鏡時延 H₀
 # ═══════════════════════════════════════
 print(f"\n{'─'*68}")
-print("5. Strong Lensing Time-Delay H0 Consistency")
+print("5. 強透鏡時延 H₀ 一致性")
 print(f"{'─'*68}")
 
 H0_lcdm = 69.2
@@ -278,14 +278,14 @@ for name, h0v, err in h0_liq:
     pull_l = (H0_lcdm - h0v) / err
     print(f"  {name:<12} {h0v:6.1f} {err:5.1f} {pull_i:+8.1f}σ {pull_l:+9.1f}σ")
 
-print(f"\n  IDCM H₀ = {H0_idm:.1f} consistent with DESI+CMB (+0.2σ)")
-print(f"  IDCM H₀ = {H0_idm:.1f} differs from SH0ES (73.0) by {(H0_idm-73.0)/1.0:.1f}σ")
+print(f"\n  IDCM H₀ = {H0_idm:.1f} 與 DESI+CMB 一致 (+0.2σ)")
+print(f"  IDCM H₀ = {H0_idm:.1f} 與 SH0ES (73.0) 相差 {(H0_idm-73.0)/1.0:.1f}σ")
 
 # ═══════════════════════════════════════
-# 6. FULL CHI2 SUMMARY TABLE
+# 6. 完整 χ² 總表
 # ═══════════════════════════════════════
 print(f"\n{'═'*68}")
-print("6. Full χ² Summary Table: IDCM vs ΛCDM")
+print("6. 完整 χ² 總表: IDCM vs ΛCDM")
 print(f"{'═'*68}")
 
 # BAO chi2 (from previous run)
@@ -316,7 +316,7 @@ print(f"{'RSD fσ₈ (20 survey)':<25} {20:>6} {chi2_rsd_idm:>10.1f} {chi2_rsd_l
 print(f"{'─'*25} {'─'*6} {'─'*10} {'─'*10} {'─'*8}")
 print(f"{'TOTAL':<25} {1853:>6} {total_idm:>10.1f} {total_lcdm:>10.1f} {total_idm-total_lcdm:+7.1f}")
 
-npar = 5  # Om, h, ombh2, sig8, ns (epsilon fixed)
+npar = 5  # Om, h, ombh2, sig8, ns (ε fixed)
 ndof = 1853 - npar
 print(f"\n  Δχ² = {total_idm-total_lcdm:+.1f} (IDCM minus ΛCDM)")
 print(f"  Total dof = {ndof}")
@@ -355,7 +355,7 @@ results = {
         "SH0ES_tension": f"{(H0_idm-73.0)/1.0:+.1f}σ",
     },
     "chi2_summary": {
-        "IDM_total": float(total_idm),
+        "IDCM_total": float(total_idm),
         "LCDM_total": float(total_lcdm),
         "delta_chi2": float(total_idm - total_lcdm),
         "ndof": ndof,
@@ -364,8 +364,8 @@ results = {
 
 with open(f"{OUT}/data/comprehensive_validation.json", "w") as f:
     json.dump(results, f, indent=2)
-print(f"\n  Results: {OUT}/data/comprehensive_validation.json")
+print(f"\n  結果: {OUT}/data/comprehensive_validation.json")
 
 print(f"\n{'═'*68}")
-print(f"Comprehensive Validation Complete")
+print(f"廣譜驗證完成")
 print(f"{'═'*68}")
