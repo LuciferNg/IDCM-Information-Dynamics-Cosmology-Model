@@ -71,8 +71,11 @@
 | `BATTLEFRONT3_COHOMOLOGY_en-US.md` | — | Cohomology lock (English) | ✅ |
 | `YUKAWA_COUPLINGS_zh-TW.md` | — | Yukawa couplings, masses, CKM (zh-TW) | ✅ |
 | `YUKAWA_COUPLINGS_en-US.md` | — | Yukawa couplings, masses, CKM (en-US) | ✅ |
-| `KOSZUL_FRAMEWORK_zh-TW.md` | — | Koszul complex & Yukawa tensor (zh-TW) | 🔲 |
-| `KOSZUL_FRAMEWORK_en-US.md` | — | Koszul complex & Yukawa tensor (en-US) | 🔲 |
+| `KOSZUL_FRAMEWORK_zh-TW.md` | — | Koszul complex & Yukawa tensor (zh-TW) | ✅ |
+| `KOSZUL_FRAMEWORK_en-US.md` | — | Koszul complex & Yukawa tensor (en-US) | ✅ |
+| `KOSZUL_COMPLEX_VERIFICATION.md` | — | CY₃(36,98) divisor volumes → k_u,k_d,k_l | ✅ |
+| `J_STAR_OPTIMIZATION.md` | — | J* fixed point optimization analysis | 🟡 |
+| `KOSZUL_JSTAR_COMPLETE.md` | — | GLSM charge confirmation of k_u,k_d,k_l | ✅ |
 | `DS_VACUUM_MODULI_DYNAMICS_zh-TW.md` | — | dS vacuum & moduli dynamics (zh-TW) | 🔴 |
 | `DS_VACUUM_MODULI_DYNAMICS_en-US.md` | — | dS vacuum & moduli dynamics (en-US) | 🔴 |
 | `OBSERVABLE_PREDICTIONS_zh-TW.md` | — | DESI/Euclid & fifth force (zh-TW) | ✅ |

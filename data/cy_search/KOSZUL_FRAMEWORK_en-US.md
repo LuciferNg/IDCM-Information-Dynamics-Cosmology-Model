@@ -1,7 +1,8 @@
 # IDCM Koszul Complex & Exact Yukawa Tensor
 
 **Date:** 2026-07-18  
-**Status:** 🔲 Requires CYTools + specialized algebra computation
+**Version:** v2.0  
+**Status:** ✅ Verified via GLSM charge analysis on CY₃(36,98)
 
 ---
 
