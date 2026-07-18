@@ -115,7 +115,7 @@ $$m_f = y_f \cdot v_{EW} / \sqrt{2}, \quad v_{EW} = 246\ \text{GeV}$$
 | $m_t$ | 輸入（基底） | 輸入 | 持平 |
 | $m_c/m_t$ | 0.74%（從 $k_u=10.21$） | 輸入 | IDCM 給出模式 |
 | $m_u/m_t$ | $1.25\times10^{-5}$（從 $k_u \cdot 2.30$） | 輸入 | IDCM 給出模式 |
-| CKM $\lambda$ | $|V_{us}| = \varphi^{-3}$ (4.2%) | 無預測 | IDCM |
+| CKM $\lambda$ | $|V_{us}| = \sqrt{\varepsilon/3}$ (0.2%) | 無預測 | IDCM v2.0 |
 | CKM $\delta$ | $\pi/2 - \arctan\beta$ (5.9%) | 無預測 | IDCM |
 
 ### 4.4 未來計算靶向

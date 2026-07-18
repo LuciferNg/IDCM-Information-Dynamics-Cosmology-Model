@@ -115,7 +115,7 @@ The complete 3×3×3 Yukawa tensor computation is IDCM's most pressing computati
 | $m_t$ | Input (base) | Input | Tie |
 | $m_c/m_t$ | 0.74% (from $k_u=10.21$) | Input | IDCM gives pattern |
 | $m_u/m_t$ | $1.25\times10^{-5}$ (from $k_u \cdot 2.30$) | Input | IDCM gives pattern |
-| CKM $\lambda$ | $|V_{us}| = \varphi^{-3}$ (4.2%) | No prediction | IDCM |
+| CKM $\lambda$ | $|V_{us}| = \sqrt{\varepsilon/3}$ (0.2%) | No prediction | IDCM v2.0 |
 | CKM $\delta$ | $\pi/2 - \arctan\beta$ (5.9%) | No prediction | IDCM |
 
 ### 4.4 Future Computational Targets

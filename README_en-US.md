@@ -24,7 +24,7 @@
 | | $m_d/m_b$ | $\varphi^{-(2k_d-\varphi)}$ | 4.59 MeV | 4.70 MeV | 2.3% |
 | | $m_e/m_\tau$ | $\varphi^{-(k_l+M/3)}$ | 0.529 MeV | 0.511 MeV | 3.6% |
 | **Higgs** | $m_H$ | $v\cdot\varphi^{-9\beta/2}$ | 125.99 GeV | 125.10 GeV | 0.71% |
-| **CKM** | $V_{us}$ | $\varphi^{-M/11}$ | 0.23607 | 0.22650 | 4.2% |
+| **CKM** | $V_{us}$ | $\sqrt{\varepsilon/3}$ | 0.22694 | 0.22650 | 0.2% |
 | | $V_{cb}$ | $\varphi^{-M/5}$ | 0.04182 | 0.04210 | **0.83%** |
 | | $V_{ub}$ | $\varphi^{-(M/5+M/11+2)}$ | 0.00376 | 0.00361 | 4.3% |
 | | $\delta_{CP}^{\text{CKM}}$ | $\pi/2-\arctan\beta$ | 72.83° | 68.80° | 5.9% |
@@ -32,7 +32,7 @@
 | | $\theta_{23}$ | $\pi/4$ | 45° | 45-48° | ✅ |
 | | $\theta_{13}$ | $\arcsin(\varepsilon(M-1)/M)$ | 8.62° | 8.57° | **0.55%** |
 | | $\delta_{CP}^{\text{PMNS}}$ | $\pi+\arctan\varphi^{-3}$ | 193.3° | 195° | 0.9% |
-| **Weinberg** | $\sin^2\theta_W$ | $V_{us}\cdot(1-\varphi^{-9})$ | 0.23296 | 0.23122 | 0.75% |
+| **Weinberg** | $\sin^2\theta_W$ | $(3/8)\cdot\varphi^{-1}$ | 0.23176 | 0.23122 | 0.23% |
 | **Dark Matter** | $M_{\text{DM}}$ | $M_P e^{-48}\varphi^{-1/2}$ | 13.68 MeV | 13.8 MeV | 0.88% |
 
 All from **4 IDCM constants**: $M=33$ (MERA steps), $N_h=42$ (KK tower cutoff), $\beta=\varphi^{-1}/2$, $\varepsilon=\varphi^{-1}/4$.
