@@ -18,10 +18,6 @@ This directory contains IDCM educational materials at three levels:
 | 繁體中文 (zh-TW) | ✅ | ✅ | ✅ |
 | 简体中文 (zh-CN) | ✅ | ✅ | ✅ |
 | 廣東話 (zh-HK) | ✅ | ✅ | ✅ |
-| 日本語 (ja-JP) | ✅ | — | — |
-| 한국어 (ko-KR) | ✅ | — | — |
-| Español (es-ES) | ✅ | — | — |
-| Français (fr-FR) | ✅ | — | — |
 
 ## Verification Scripts
 
