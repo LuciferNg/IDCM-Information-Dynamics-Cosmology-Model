@@ -4,6 +4,7 @@
 [![Parameters](https://img.shields.io/badge/free%20params-0-brightgreen)]()
 [![Data points](https://img.shields.io/badge/data%20points-1853-orange)]()
 [![Δχ² vs ΛCDM](https://img.shields.io/badge/%CE%94%CF%87%C2%B2-vs%20%CE%9BCDM-red)]()
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21434591.svg)](https://doi.org/10.5281/zenodo.21434591)
 
 [← Back to language selection](README.md)
 
