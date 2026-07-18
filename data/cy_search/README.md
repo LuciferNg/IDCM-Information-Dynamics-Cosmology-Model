@@ -62,7 +62,7 @@
 | `DARK_MATTER_MASS_en-US.md` | — | DM mass closure (English) | ✅ |
 | W-field PDE | Numerical (36D) | ✅ Closed, ξ=10 verified |
 | `PDE_CLOSURE_zh-TW.md` | — | W-field PDE closure (Chinese) | ✅ |
-| `PDE_CLOSURE_en-US.md` | — | W-field PDE closure (English) | ✅ |
+| `PDE_CLOSURE_RESULTS.md` | — | W-field PDE computation (L1+L2) | ✅ |
 | `SU3_BUNDLE_FRAMEWORK_zh-TW.md` | — | SU(3) Monad framework (Chinese) | ✅ |
 | `SU3_BUNDLE_FRAMEWORK_en-US.md` | — | SU(3) Monad framework (English) | ✅ |
 | `BATTLEFRONT2_FEM_PDE_zh-TW.md` | — | FEM/PDE framework (Chinese) | 🔲 |
