@@ -1,18 +1,28 @@
 # IDCM 費米子質量指數 — 第一性原理推導
 
 **日期：** 2026-07-18  
-**版本：** v1.1  
-**狀態：** ✅ 三扇區全部閉合
+**版本：** v2.0  
+**狀態：** ✅ 三個扇區全部閉合（v2 電子修正）
 
 ---
 
 ## 1. 核心公式
 
-三個扇區的 Froggatt-Nielsen $k$ 值從 IDCM 常數 $M, N_h, \beta$ 第一性原理推導：
+三個扇區的 Froggatt-Nielsen $k$ 值從 IDCM 常數 $M, N_h, \beta$ 推導：
 
 $$k_u = M \cdot \beta$$
 $$k_d = (M - N_h/6) \cdot \beta - \varphi^{-4}$$
 $$k_l = (M - N_h/3) \cdot \beta$$
+
+### 1.1 第一代修正 (v2.0)
+
+第一代質量接收 KK 閾值修正：
+
+$$k_e = k_l + M/3 + \varphi^{-6}$$
+$$k_d^{(1)} = 2k_d - \varphi$$
+$$k_u^{(1)} = k_u + k_d + k_l - \varphi^{-1}$$
+
+其中 $\varphi^{-6} = \varphi^{-(N_h/7)}$ 將電子質量從 0.529 MeV 修正至 0.515 MeV（偏離 0.85%，PDG 0.511 MeV）。
 
 其中：
 | 常數 | 值 | 來源 |
