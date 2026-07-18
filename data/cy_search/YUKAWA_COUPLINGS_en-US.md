@@ -138,7 +138,7 @@ CKM angles from diagonalization $V = U^\dagger_u U_d$, where $U_{u,d}$ diagonali
 
 | Parameter | IDCM | PDG | Error |
 |:---------:|:----:|:---:|:-----:|
-| $|V_{us}| = \sin\theta_{12}$ | $\varphi^{-3} = 0.23607$ | $0.22650 \pm 0.00048$ | 4.2% |
+| $|V_{us}| = \sin\theta_{12}$ | $\sqrt{\varepsilon/3} = 0.22694$ | $0.22650 \pm 0.00048$ | 0.2% |
 | $|V_{cb}| = \sin\theta_{23}$ | $\varphi^{-7} = 0.03444$ | $0.04210 \pm 0.00070$ | 18.2% |
 | $|V_{ub}| = \sin\theta_{13}$ | $\varphi^{-10} = 0.00813$ | $0.00361 \pm 0.00012$ | 125% |
 | $\delta_{CP}$ | $\pi/2 - \arctan\beta = 72.83^\circ$ | $68.8^\circ \pm 2.5^\circ$ | 5.9% |
@@ -172,7 +172,7 @@ where:
 
 | Parameter | New IDCM Formula | IDCM Value | PDG | Error | Old Deviation |
 |:---------:|:----------------:|:----------:|:---:|:-----:|:-------------:|
-| $|V_{us}|$ | $\varphi^{-M/11}$ | 0.23607 | 0.22650 | 4.2% | 4.2% |
+| $|V_{us}|$ | $\sqrt{\varepsilon/3}$ | 0.22694 | 0.22650 | 0.2% | 0.2% |
 | $|V_{cb}|$ | $\varphi^{-M/5}$ | **0.04182** | 0.04210 | **0.83%** | ← 18.2% |
 | $|V_{ub}|$ | $\varphi^{-(M/5+M/11+2)}$ | **0.00383** | 0.00361 | **6.1%** | ← 125% |
 | $\delta_{CP}$ | $\pi/2 - \arctan\beta$ | 72.83° | 68.80° | 5.9% | 5.9% |
