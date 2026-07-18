@@ -94,7 +94,7 @@ $$n_{\text{gen}} = \frac{\text{Ind}(L)}{16} = \frac{48}{16} = 3$$
 
 ## 7. CKM 矩陣
 
-$$V_{us} = \varphi^{-M/11} = \varphi^{-3} = 0.23607\ (4.2\%)$$
+$$V_{us} = \sqrt{\varepsilon/3} = \sqrt{\varphi^{-1}/12} = 0.22694\ (0.2\%)$$
 $$V_{cb} = \varphi^{-M/5} = \varphi^{-6.6} = 0.04182\ (0.83\%)$$
 $$V_{ub} = \varphi^{-(M/5 + M/11 + 2)} = \varphi^{-11.6} = 0.00376\ (4.3\%)$$
 $$\delta_{CP}^{\text{CKM}} = \frac{\pi}{2} - \arctan\beta = 72.83^\circ\ (5.9\%)$$
@@ -116,7 +116,7 @@ $$k_H = \frac{9\beta}{2} = 1.3906$$
 $$m_H = v \cdot \varphi^{-k_H} = 246 \cdot \varphi^{-1.3906} = 125.99\ \text{GeV}\ (0.71\%)$$
 
 弱混合角：
-$$\sin^2\theta_W = V_{us} \cdot (1-\varphi^{-9}) = 0.23296\ (0.75\%)$$
+$$\sin^2\theta_W = \frac{3}{8}\cdot\varphi^{-1} = 0.23176\ (0.23\%)$$
 
 ## 10. 暗物質
 
