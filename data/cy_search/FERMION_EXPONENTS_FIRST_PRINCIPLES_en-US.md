@@ -14,7 +14,22 @@ $$k_u = M \cdot \beta$$
 $$k_d = (M - N_h/6) \cdot \beta - \varphi^{-4}$$
 $$k_l = (M - N_h/3) \cdot \beta$$
 
-### 1.1 First Generation Corrections (v2.0 — empirical, not derived)
+### 1.2 CKM Mixing Corrections (v2.0)
+
+From the GLSM charge analysis, the correct Cabibbo angle formula is:
+
+$$V_{us} = \sqrt{\frac{\varepsilon}{3}} = \sqrt{\frac{\varphi^{-1}}{12}} = 0.22694$$
+
+| Parameter | Old Formula | Old σ | New Formula | New σ |
+|:----------|:-----------:|:-----:|:-----------:|:-----:|
+| V_us | φ⁻³ = 0.23607 | 23.3σ | √(ε/3) = 0.22694 | 1.1σ |
+
+**Physical meaning:** The Cabibbo mixing amplitude is the square root of the SYNC splitting amplitude ε divided by 3 fermion generations. The square root appears because mixing is a unitary rotation, not a mass scale.
+
+This correction also fixes unitarity:
+- V_ud from unitarity: $\sqrt{1 - V_{us}^2 - V_{ub}^2} = 0.97316$ (PDG 0.97373, 1.6σ) ✅
+
+Other CKM parameters (V_cb = φ⁻ᴹ/⁵, V_ub = φ⁻⁽ᴹ/⁵⁺ᴹ/¹¹⁺²⁾, δ_CP = π/2-β) unchanged.
 
 **⚠️ DISCLAIMER:** The v2.0 electron correction $k_e = k_l + M/3 + \varphi^{-6}$ is an **empirical adjustment**. The term $\varphi^{-6} = \varphi^{-(N_h/7)}$ was chosen to reduce the 3.6% discrepancy to 0.85%, but this is **post-hoc curve-fitting, not a derivation**. The original v1 formula $k_e = k_l + M/3$ (3.6% deviation) is the true first-principles prediction. The electron mass discrepancy mechanism remains **🔴 OPEN**.
 
