@@ -20,7 +20,7 @@
 | | $m_d/m_b$ | $2k_d-\varphi$ | 4.70 MeV | 2.3% | ✅ |
 | | $m_e/m_\tau$ | $k_l+M/3$ | 0.511 MeV | 3.6% | ✅ |
 | **Higgs** (1) | $m_H$ | $k_H=9\beta/2$ | 125.10 GeV | 0.71% | ✅ |
-| **CKM** (4) | $V_{us}$ | $\varphi^{-M/11}$ | 0.22650 | 4.2% | ✅ |
+| **CKM** (4) | $V_{us}$ | $\sqrt{\varepsilon/3}$ | 0.22650 | 0.2% | ✅ |
 | | $V_{cb}$ | $\varphi^{-M/5}$ | 0.04210 | 0.83% | ✅ |
 | | $V_{ub}$ | $\varphi^{-(M/5+M/11+2)}$ | 0.00361 | 5.9% | ✅ |
 | | $\delta_{CP}$ | $\pi/2-\arctan\beta$ | 68.8° | 5.9% | ✅ |
@@ -28,7 +28,7 @@
 | | $\theta_{23}$ | $\pi/4$ | 45° | Maximal | ✅ |
 | | $\theta_{13}$ | $\arcsin(\varepsilon(M-1)/M)$ | 8.57° | 0.55% | ✅ |
 | | $\delta_{CP}$ | $\pi+\arctan\varphi^{-3}$ | 195° | 0.9% | ✅ |
-| **Weinberg** (1) | $\sin^2\theta_W$ | $V_{us}\cdot(1-\varphi^{-9})$ | 0.23122 | 0.75% | ✅ |
+| **Weinberg** (1) | $\sin^2\theta_W$ | $(3/8)\cdot\varphi^{-1}$ | 0.23122 | 0.23% | ✅ |
 
 **Dark Matter**: $M_{\text{DM}} = M_P\cdot e^{-48}\cdot\varphi^{-1/2} = 13.68$ MeV (0.88% ✅)
 
