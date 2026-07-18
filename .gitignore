@@ -6,10 +6,6 @@ __pycache__/
 .venv/
 venv/
 
-# Data files (large)
-*.fits
-*.npz
-
 # OS
 .DS_Store
 Thumbs.db
@@ -18,6 +14,22 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Not uploaded
-codes/
-data/
+# Data files (large)
+*.fits
+*.npz
+*.npy
+*.h5
+
+# Large data files (excluded from git)
+data/MCMC/*.csv
+data/MCMC/*.npz
+papers/*.pdf
+
+# Large legacy repos (outside this repo)
+../ICDM*
+../CFAS*
+../CIW*
+../cosmic_validation/
+../IDM*
+../spikes/
+../importivity*

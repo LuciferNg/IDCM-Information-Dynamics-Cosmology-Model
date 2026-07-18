@@ -1,0 +1,9 @@
+# IDCM CY3 — chi=-248 Parent (E8-type) — KS Database
+# Vertices:
+1 0 0 0
+-5 -2 -1 -1
+0 0 0 1
+0 0 1 0
+0 1 0 0
+-3 -1 -1 0
+-2 -1 0 0

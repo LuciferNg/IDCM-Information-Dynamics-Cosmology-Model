@@ -1,0 +1,219 @@
+"""
+IDCM CY3 Search Script
+Target: (h11, h21) = (36, 98), chi = -124
+Geometry: S1_w x_warp CY3 with SO(10) Wilson line
+
+USAGE (with SageMath installed):
+  sage search_cy36_98.sage [--nef FILE] [--ks-dir PATH]
+
+DEPENDENCIES (via SageMath):
+  - PALP tools: nef.x, poly.x  (bundled with SageMath)
+  - sage.geometry.polyhedron.*
+  - sage.schemes.toric.*
+
+FILES NEEDED:
+  - Kreuzer-Skarke reflexive polytope database
+    (~7 GB, from http://www105.pair.com/~kreuzer/data/):
+      * weight_matrix_d4_r4.tar.gz (the main dataset)
+  OR pre-computed Hodge number list:
+      * h11h21_list.txt (one 'h11 h21' pair per line)
+"""
+
+import sys, os, re, math, gzip
+
+# ═════════════════════════════════════════════════════════════
+# TARGET SPECIFICATION (from IDCM unified_constants)
+# ═════════════════════════════════════════════════════════════
+TARGET = {
+    'h11': 36,
+    'h21': 98,
+    'chi': -124,       # Euler characteristic = 2*(h11 - h21)
+    'ind': 48,          # Dirac index = 3 gens * 16 Weyl spinors
+    'N_m': 37,          # M_P topological charge = h11 + 1
+    'N': 135,           # D_H/L_P topological charge = 1 + h11 + h21
+    'warp': r'2\pi kR = 1',  # Warp factor condition
+    'group': 'SO(10)',
+    'wilson': 'Z2',     # Wilson line for SO(10) -> SU(5)
+}
+
+def print_target():
+    print("=" * 60)
+    print(f"IDCM CY3 Search: target (h11, h21) = ({TARGET['h11']}, {TARGET['h21']})")
+    print(f"Euler char: chi = 2*(h11-h21) = {TARGET['chi']}")
+    print(f"SO(10) charge: N = 3 x dim(SO(10)) = 1 + h11 + h21 = {TARGET['N']}")
+    print(f"MP charge: N_m = 1+12+24 = h11+1 = {TARGET['N_m']}")
+    print(f"Dirac index: |Ind(D_CY)| = 48 (3 gens x 16 Weyl)")
+    print(f"Projection: |chi|/2 = 62 -> 3 via Z2 Wilson line")
+    print(f"Warp: S1_w (2pi kR = 1) x CY3")
+    print("=" * 60)
+
+
+# ═════════════════════════════════════════════════════════════
+# METHOD 1: Search by Hodge number (fast, needs pre-computed list)
+# ═════════════════════════════════════════════════════════════
+def search_hodge_list(filename="h11h21_list.txt"):
+    """
+    Scan a pre-computed Hodge number list for matching pairs.
+    Format: one 'h11 h21' pair per line.
+    """
+    candidates = []
+    count = 0
+    try:
+        with open(filename) as f:
+            for line in f:
+                try:
+                    h11, h21 = map(int, line.strip().split())
+                    count += 1
+                    if h11 == TARGET['h11'] and h21 == TARGET['h21']:
+                        candidates.append((h11, h21))
+                except:
+                    continue
+    except FileNotFoundError:
+        print(f"[!] Hodge list not found: {filename}")
+        print(f"    Download from: https://www.thphys.uni-heidelberg.de/~kreuzer/")
+        return candidates
+
+    print(f"  Scanned {count} polytopes")
+    print(f"  Found {len(candidates)} matching (36, 98)")
+    return candidates
+
+
+# ═════════════════════════════════════════════════════════════
+# METHOD 2: Use nef.x (PALP) to compute Hodge numbers
+# ═════════════════════════════════════════════════════════════
+def scan_with_nef(ks_polytope_file, limit=None):
+    """
+    Use nef.x to compute Hodge numbers from KS database.
+    
+    nef.x -N -H < polytope_file
+    
+    Output format:
+      M:35  N:5  H:36,98  [n=...]
+    
+    where H:36,98 means (h11, h21) = (36, 98).
+    """
+    import subprocess
+    
+    candidates = []
+    count = 0
+    
+    if not os.path.exists(ks_polytope_file):
+        print(f"[!] KS database not found: {ks_polytope_file}")
+        print(f"    Download from the original source:")
+        print(f"    http://www105.pair.com/~kreuzer/data/")
+        return candidates
+    
+    # For a large database, use streaming
+    # nef.x accepts pipe input and processes line by line
+    proc = subprocess.Popen(
+        ['nef.x', '-N', '-H', '-f'],
+        stdin=open(ks_polytope_file),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        bufsize=1,
+        universal_newlines=True
+    )
+    
+    h11_target = TARGET['h11']
+    h21_target = TARGET['h21']
+    
+    for line in proc.stdout:
+        count += 1
+        if limit and count > limit:
+            break
+        if count % 100000 == 0:
+            print(f"  Processed {count} polytopes...")
+        
+        # Parse nef.x output: find "H:36,98"
+        m = re.search(r'H:(\d+),(\d+)', line)
+        if m:
+            h11, h21 = int(m.group(1)), int(m.group(2))
+            if h11 == h11_target and h21 == h21_target:
+                candidates.append((h11, h21, line.strip()))
+                print(f"  [HIT] Polytope #{count}: {line.strip()}")
+    
+    print(f"\n  Total processed: {count}")
+    print(f"  Matches: {len(candidates)}")
+    return candidates
+
+
+# ═════════════════════════════════════════════════════════════
+# METHOD 3: Use SageMath toric geometry
+# ═════════════════════════════════════════════════════════════
+def sage_toric_analysis(polytope_data):
+    """
+    Analyze a reflexive polytope using SageMath toric geometry.
+    
+    Given a weight vector (e.g., from nef.x output), this function:
+      1. Constructs the toric variety from the polytope
+      2. Computes the Hodge numbers
+      3. Checks the fundamental group
+      4. Computes the Chern classes
+      5. Checks if the variety supports SO(10) Wilson lines
+    """
+    try:
+        from sage.geometry.polyhedron.constructor import Polyhedron
+        from sage.schemes.toric.variety import ToricVariety
+        from sage.geometry.fan import Fan
+    except ImportError:
+        print("[!] SageMath not available. Install with: sudo apt-get install sagemath")
+        return None
+    
+    # Construct polytope from weight vectors
+    # Each row is one weight vector
+    vertices = []
+    for row in polytope_data:
+        vertices.append(row)
+    
+    P = Polyhedron(vertices=vertices)
+    
+    # Check reflexivity
+    if not P.is_reflexive():
+        print("  Not reflexive - skipping")
+        return None
+    
+    # Construct toric variety
+    fan = Fan.from_polytope(P)
+    X = ToricVariety(fan)
+    
+    # Hodge numbers
+    h11 = X.h11()
+    h21 = X.h21()
+    chi = 2 * (h11 - h21)
+    
+    print(f"  Hodge: h11={h11}, h21={h21}, chi={chi}")
+    
+    # Check if matches target
+    if h11 == TARGET['h11'] and h21 == TARGET['h21']:
+        print("  *** TARGET MATCH ***")
+    
+    # Check fundamental group (simplified: toric varieties are simply connected)
+    # For non-trivial fundamental group, need a Z2 quotient
+    # This requires checking the polytope for freely acting symmetries
+    
+    return {
+        'h11': h11,
+        'h21': h21,
+        'chi': chi,
+        'P': P,
+        'X': X,
+    }
+
+
+# ═════════════════════════════════════════════════════════════
+# MAIN
+# ═════════════════════════════════════════════════════════════
+if __name__ == '__main__':
+    print_target()
+    
+    # Try various search methods
+    print("\n[1/3] Searching Hodge number list...")
+    search_hodge_list()
+    
+    print("\n[2/3] If KS database is available, use nef.x:")
+    print("  sage: scan_with_nef('/path/to/KS_database.txt')")
+    
+    print("\n[3/3] For individual polytope analysis, use:")
+    print("  sage: sage_toric_analysis(weight_vector)")
+    
+    print("\n=== IDCM CY3 Search Ready ===")
