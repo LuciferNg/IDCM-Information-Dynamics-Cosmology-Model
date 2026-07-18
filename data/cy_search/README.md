@@ -97,9 +97,9 @@
 | `HIGGS_MASS_zh-TW.md` | — | Higgs mass prediction (zh-TW) | ✅ |
 | `HIGGS_MASS_en-US.md` | — | Higgs mass prediction (en-US) | ✅ |
 | `NEUTRINO_SECTOR_zh-TW.md` | — | Neutrino seesaw & PMNS (zh-TW) | ✅ |
-| `NEUTRINO_SECTOR_en-US.md` | — | Neutrino seesaw & PMNS (en-US) | ✅ |
-| `BARYOGENESIS_zh-TW.md` | — | Baryogenesis/leptogenesis (zh-TW) | 🟡 |
-| `BARYOGENESIS_en-US.md` | — | Baryogenesis/leptogenesis (en-US) | 🟡 |
+| `PMNS_CP_PHASE_en-US.md` | — | PMNS CP phase (en-US) | ✅ |
+| `BARYOGENESIS_zh-TW.md` | — | Baryogenesis via leptogenesis (zh-TW) | 🟡 |
+| `BARYOGENESIS_en-US.md` | — | Baryogenesis via leptogenesis (en-US) | 🟡 |
 | `PMNS_CP_PHASE_zh-TW.md` | — | PMNS CP phase prediction (zh-TW) | ✅ |
 | `PMNS_CP_PHASE_en-US.md` | — | PMNS CP phase prediction (en-US) | ✅ |
 | `MAJORANA_PHASES_zh-TW.md` | — | Majorana phases & 0νββ (zh-TW) | 🟡 |
