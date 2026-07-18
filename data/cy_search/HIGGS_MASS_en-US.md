@@ -6,7 +6,9 @@
 
 ---
 
-## 1. Higgs Mass Formula (Corrected)
+## 1. Higgs Mass Formula (v2.0 — empirical correction, not derived)
+
+**⚠️ DISCLAIMER:** The v2.0 correction $k_H = 9\beta/2 + \varphi^{-9}$ is an **empirical adjustment** to match the PDG central value. The term $\varphi^{-9}$ was chosen because $9 = N_h - M = 42 - 33$, but this is a **post-hoc association, not a derivation**. The original v1.0 formula $k_H = 9\beta/2$ (125.99 GeV, 0.71% deviation) is the true first-principles prediction. The correction mechanism for the 6.3σ discrepancy remains **🔴 OPEN**.
 
 The Higgs boson mass $m_H$ is predicted from the electroweak vacuum expectation value $v$ and the IDCM constant $\beta$:
 

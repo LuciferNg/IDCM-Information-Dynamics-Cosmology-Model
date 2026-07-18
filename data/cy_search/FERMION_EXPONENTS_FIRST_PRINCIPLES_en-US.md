@@ -14,15 +14,11 @@ $$k_u = M \cdot \beta$$
 $$k_d = (M - N_h/6) \cdot \beta - \varphi^{-4}$$
 $$k_l = (M - N_h/3) \cdot \beta$$
 
-### 1.1 First Generation Corrections (v2.0)
+### 1.1 First Generation Corrections (v2.0 — empirical, not derived)
 
-The first-generation masses receive KK threshold corrections:
+**⚠️ DISCLAIMER:** The v2.0 electron correction $k_e = k_l + M/3 + \varphi^{-6}$ is an **empirical adjustment**. The term $\varphi^{-6} = \varphi^{-(N_h/7)}$ was chosen to reduce the 3.6% discrepancy to 0.85%, but this is **post-hoc curve-fitting, not a derivation**. The original v1 formula $k_e = k_l + M/3$ (3.6% deviation) is the true first-principles prediction. The electron mass discrepancy mechanism remains **🔴 OPEN**.
 
-$$k_e = k_l + M/3 + \varphi^{-6}$$
-$$k_d^{(1)} = 2k_d - \varphi$$
-$$k_u^{(1)} = k_u + k_d + k_l - \varphi^{-1}$$
-
-where $\varphi^{-6} = \varphi^{-(N_h/7)}$ corrects the electron mass from 0.529 MeV → 0.515 MeV (0.85% vs PDG 0.511 MeV).
+Also, $V_{us} = \varphi^{-M/11} = \varphi^{-3}$ gives 0.23607 vs PDG 0.22650 (4.2%, 23σ). A possible correction $V_{us} = \sqrt{\varepsilon/3} \approx 0.2269$ brings it to 1σ, but this is likewise **empirical curve-fitting, not derived**.
 
 where:
 | Constant | Value | Origin |
