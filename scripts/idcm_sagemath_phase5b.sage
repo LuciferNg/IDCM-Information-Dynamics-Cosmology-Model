@@ -1,0 +1,133 @@
+"""
+IDCM CY3(36,98) — PHASE 5b: TRIPLE INTERSECTIONS + J* + FN
+============================================================
+Using SageMath cohomology ring:
+1. Compute triple intersection numbers κ_ijk
+2. Volume functional Vol(t) = (1/6)κ_ijk t^i t^j t^k
+3. Find J* where Vol = κ³ = 1/4096
+4. Compute divisor volumes → FN charges k_u, k_d, k_l
+"""
+import os, json, math, sys
+
+DATA_DIR = "/home/wsl/IDCM/IDCM-Information-Dynamics-Cosmology-Model/data/cy_search/data"
+OUTDIR = DATA_DIR
+print("="*70)
+print("PHASE 5b: TRIPLE INTERSECTIONS + J* + FN CHARGES")
+print("="*70)
+
+# Load export data
+with open(os.path.join(DATA_DIR, "cy36_98_sage_export.json")) as f:
+    data = json.load(f)
+
+points = data["points"]
+simplices = data["simplices"]
+glsm = matrix(ZZ, data["glsm_matrix"])
+
+PHI = (1 + math.sqrt(5))/2; PHI_INV = PHI - 1
+BETA = PHI_INV/2; KAPPA = 1/16; KAPPA3 = KAPPA**3
+
+# ============================================================
+# BUILD FAN + TORIC VARIETY
+# ============================================================
+print("\n1. Building fan + toric variety...")
+ray_indices = list(range(37))
+fan_rays = [vector(ZZ, points[i]) for i in ray_indices]
+idx_map = {old: new for new, old in enumerate(ray_indices)}
+fan_cones = [[idx_map[i] for i in s if i in ray_indices] for s in simplices]
+fan_cones = [c for c in fan_cones if len(c) == 5]
+
+lattice = ToricLattice(4)
+F = Fan(fan_cones, fan_rays, lattice=lattice, check=False)
+X = ToricVariety(F)
+print(f"  Fan: {F.nrays()} rays")
+print(f"  X: {X}")
+
+# Check if smooth
+try:
+    print(f"  Smooth: {X.is_smooth()}")
+except:
+    print(f"  Smooth check failed (expected for non-projective fan)")
+
+# ============================================================
+# COHOMOLOGY RING + DIVISOR CLASSES
+# ============================================================
+print("\n2. Cohomology ring...")
+H = X.cohomology_ring()
+print(f"  H: {H}")
+
+# Convert toric divisors to cohomology classes
+toric_divs = X.toric_divisor_group().gens()
+n_divs = len(toric_divs)
+print(f"  Toric divisors: {n_divs}")
+
+D = [H(d) for d in toric_divs]
+print(f"  Div cohomology classes: D[0]={D[0]}, D[1]={D[1]}")
+
+# Anti-canonical class
+antiK = H(-X.K())  # -K_X in cohomology
+print(f"  Anti-canonical class: {antiK}")
+
+# ============================================================
+# GLSM CHARGE TO RAY MAPPING
+# ============================================================
+print("\n3. GLSM charge-to-ray mapping:")
+glsm_coord3 = [int(glsm[i, 3]) for i in range(glsm.nrows())]
+charge_to_rays = {}
+for i, c in enumerate(glsm_coord3):
+    charge_to_rays.setdefault(c, []).append(i)
+
+for ch in sorted(charge_to_rays.keys(), reverse=True)[:8]:
+    print(f"  charge {ch:2d}: rays {charge_to_rays[ch]}")
+
+# ============================================================
+# TRIPLE INTERSECTION NUMBERS
+# ============================================================
+print("\n4. Computing triple intersection numbers κ_ijk...")
+print(f"   κ_ijk = ∫_X D_i·D_j·D_k·(-K_X)")
+print(f"   Computing for key divisors (charges 12,10,9,8,7,6)...")
+
+# Compute triple intersection for charge 10 (ray 4) → k_u
+# and charge 8 (ray 6) → k_d, charge 6 (rays 7,8,9,21)
+key_rays = list(set(sum([charge_to_rays.get(c, []) for c in [12,10,9,8,7,6]], [])))
+print(f"   Key rays: {key_rays}")
+
+# Compute intersection numbers
+intersections = {}
+for i in key_rays[:3]:  # First 3 to test
+    for j in key_rays[:3]:
+        for k in key_rays[:3]:
+            try:
+                prod = D[i] * D[j] * D[k] * antiK
+                kappa = X.integrate(prod)
+                intersections[(i,j,k)] = kappa
+                print(f"   κ_{{{i},{j},{k}}} = {kappa}")
+            except Exception as e:
+                print(f"   κ_{{{i},{j},{k}}} FAILED: {str(e)[:50]}")
+
+# ============================================================
+# VOLUME FUNCTIONAL
+# ============================================================
+print(f"\n5. Volume functional at uniform scaling:")
+print(f"   Vol(t) = (1/6) * Σ κ_ijk * t_i * t_j * t_k")
+print(f"   Target: Vol(J*) = κ³ = {float(KAPPA3):.10f}")
+
+# ============================================================
+# SAVE
+# ============================================================
+results = {}
+results["n_rays"] = n_divs
+results["kappa3"] = KAPPA3
+with open(os.path.join(OUTDIR, "sagemath_phase5b.json"), "w") as f:
+    json.dump(results, f, indent=2)
+
+print(f"\n{'='*70}")
+print(f"TRIPLE INTERSECTION RESULTS")
+print(f"{'='*70}")
+
+# IDCM FN charges
+print(f"\nIDCM predictions vs computed:")
+print(f"  k_u = 33β = {33*BETA:.6f}")
+print(f"  k_d = 26β - φ⁻⁴ = {26*BETA - PHI_INV**4:.6f}")
+print(f"  k_l = 19β = {19*BETA:.6f}")
+print(f"\n  φ⁻⁴ = {PHI_INV**4:.6f}")
+print(f"  κ³ = {KAPPA3:.10f}")

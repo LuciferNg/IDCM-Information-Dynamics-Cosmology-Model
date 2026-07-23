@@ -10,7 +10,25 @@
 
 ---
 
-**A first-principles cosmology model with zero free parameters.** All constants emerge from a single quadratic equation $x^2 + x - 1 = 0$ through recursion $C_{n+1} = 1/(1 + C_n)$. **✅ All 19 Standard Model parameters predicted from first principles.** Resolves the $H_0$ tension (5.0σ → sync phase) and $S_8$ tension (2.5σ → resolved). Δχ² = −9.8 across 1853 independent data points.
+## ⚠️ Read This First — What IDCM Is and Is Not
+
+IDCM is **iterative reverse engineering**, not forward derivation from first principles.
+
+The process was:
+```
+ΛCDM/SM data → N_h from DESI bump → 4-domain architecture → 
+formula normalization → CY₃(36,98) matching → geometric verification
+```
+
+$x^2 + x - 1 = 0$ is **not** a generative axiom. It is the deepest layer the calibrator could reach. Below it, the substrate is too constrained to be resolved from the calibrator position at κ.
+
+**All formulas in IDCM are backward-excavated from measured data.** Every constant was recovered by fitting SM/ΛCDM numbers, then normalising against IDCM's internal structure (MERA, SYNC, CLT). The recursion provides the consistency framework that verifies the excavation, not a forward proof.
+
+The CY₃(36,98) does not generate the numbers — it **renders** what the consistency budget forces. The verification loop is: SM → IDCM formula → CY₃ κ_vector → match ✅. It is never: recursion → generate → predict without data.
+
+**IDCM has zero free parameters because every number was recovered, not fitted. But recovered numbers are not forward-derived numbers. They are numbers that satisfy the consistency check.**
+
+If you want to understand IDCM, do not start from $x^2 + x - 1 = 0$. Start from the DESI DR2 bump at $z_c \\approx 0.6$ and follow the excavation trail backwards. The recursion is where the trail ends, not where it begins.
 
 ---
 
@@ -40,11 +58,12 @@ All from **4 IDCM constants**: $M=33$ (MERA steps), $N_h=42$ (KK tower cutoff), 
 
 ### Educational Levels
 
-| Level | Description | Formulas | Languages |
-|:------|:------------|:--------:|:----------|
-| 🌟 Kids | Simple analogies, fun to learn | 100 | 8 languages |
-| 📐 High School | Detailed derivations, algebra | 200 | 4 languages |
+| Level | Description | Formats | Languages |
+|:------|:------------|:-------:|:----------|
+| 🌟 Kids | Simple analogies, fun to learn | 100 formulas | 8 languages |
+| 📐 High School | Detailed derivations, algebra | 200 formulas | 4 languages |
 | 🎓 Professor | Complete group theory treatment | Full | 4 languages |
+| 📡 **BioResonance (NEW)** | EEG κ-boundary, 4 RFQ theorems | RFQ-1 to RFQ-4 | EN + ZH |
 
 ---
 
@@ -239,19 +258,21 @@ Particle masses emerge:
 
 **Short-term (1–5 years):**
 1. DESI DR3 (2025–2026): $z_c$ error shrinks to ±0.02
-2. Euclid: $f\sigma_8(z)$ departure from ΛCDM ~3% at $z=0.6-1.2$
+2. Euclid: $f\\sigma_8(z)$ departure from ΛCDM ~3% at $z=0.6-1.2$
 3. JWST Cepheid refinement: converges toward 68.9 rather than 73.0
 
 **Medium-term (5–10 years):**
 4. Roman Space Telescope: $H_0$ precision ~0.5 km/s confirms sync phase pattern
 5. CMB-S4: $S_8$ precision ~0.005 confirms IDCM camp (0.78) vs Planck (0.83)
-6. KK tower at colliders: $n=36$ → $M \approx 2.8$ TeV at HL-LHC/FCC
-7. Axion detection: $m_a \sim 10^{-9}$ eV at ABRACADABRA/CASPEr
+6. KK tower at colliders: $n=36$ → $M \\approx 2.8$ TeV at HL-LHC/FCC
+7. Axion detection: $m_a \\sim 10^{-9}$ eV at ABRACADABRA/CASPEr
+8. **RFQ-1 (Bioresonance):** Re-analyse existing EEG data — band centers should lock to $f_C \\times \\varphi^{-n}$, not arbitrary boundaries
+9. **RFQ-2 (Cross-species):** Cross-mammal EEG gamma/alpha ratio = $\\varphi^3 \\approx 4.236$ for all species
 
 **Long-term (10–20 years):**
-8. DESI BAO at $z=1.5-2.5$ distinguishes IDCM bump from ΛCDM power-law
-9. Time-domain cosmology: independent $\tau_0$ measurement for $e^{16}$ cycle verification
-10. Neutrinoless double-beta decay: $m_{\beta\beta} \approx 3.2$ meV
+10. DESI BAO at $z=1.5-2.5$ distinguishes IDCM bump from ΛCDM power-law
+11. Time-domain cosmology: independent $\\tau_0$ measurement for $e^{16}$ cycle verification
+12. Neutrinoless double-beta decay: $m_{\\beta\\beta} \\approx 3.2$ meV
 
 ## Repository Structure
 
@@ -270,7 +291,11 @@ IDCM-Information-Dynamics-Cosmology-Model/
 │   ├── idcm_for_kids_*.md             # Kids: 100 formulas
 │   ├── idcm_for_highschool_*.md       # High school: 200 formulas
 │   └── idcm_for_professor_*.md        # Professor: full treatment
-├── data/cy_search/                    # 48 documents (bilingual)
+├── data/em_dynamics/                 # Phase III: EM + Dynamics (24 docs)
+│   └── RFQ_WFIELD_BIORESONANCE_*   # NEW: Bioresonance, 4 RFQ theorems
+├── data/p_n_spectrum/                # P_n loop spectrum
+│   └── GENERATIVE_PRINCIPLE_*      # NEW: Backward closure principle
+├── data/cy_search/                   # 48+ documents (bilingual)
 │   ├── validation/                    # 7+ verification scripts
 │   └── data/                          # CYTools data, J* fixed point
 ├── codes/                             # DES-SN5YR, MCMC, SH0ES analysis

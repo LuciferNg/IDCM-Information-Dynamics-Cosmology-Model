@@ -1,0 +1,51 @@
+{
+  "method": "CYTools compute_AA() + compute_kappa_vector() on CY₃(36,98) @ J*",
+  "date": "2026-07-20",
+  "backend": "qhull triangulation",
+  "cy_volume": 0.00035061674232881977,
+  "results": {
+    "vus_proxy": {
+      "description": "AA λ₁/λ₀ eigenvalue ratio as V_us proxy",
+      "aa_value": 0.231818,
+      "idcm_formula": 0.236068,
+      "pdg": 0.2243,
+      "error_vs_pdg_pct": 3.3
+    },
+    "vcb_proxy": {
+      "description": "AA λ₅/λ₀ — needs 3×3 Yukawa projection for proper value",
+      "aa_value": 0.090700,
+      "idcm_formula": 0.041752,
+      "pdg": 0.04178
+    },
+    "vub_proxy": {
+      "description": "AA λ₉/λ₀ — needs 3×3 Yukawa projection",
+      "aa_value": 0.059924,
+      "idcm_formula": 0.014485,
+      "pdg": 0.00363
+    }
+  },
+  "kappa_phi_exponents": [
+    0.000, 1.938, 2.165, 2.329, 3.070, 4.115, 5.766, 6.371,
+    7.124, 7.135, 7.374, 8.299, 8.437, 8.671, 9.073, 9.200,
+    9.338, 9.404, 9.436, 9.529, 10.232, 10.550, 10.567, 10.634,
+    10.736, 10.832, 11.345, 11.621, 12.606, 13.132, 14.354, 14.458
+  ],
+  "aa_eigenvalues": [
+    1.81716869, 0.42125317, 0.41615485, 0.31228483, 0.26227545,
+    0.16481764, 0.15270389, 0.11498863, 0.11455476, 0.10889271,
+    0.09951154, 0.09406673, 0.09089180, 0.08441780, 0.07092871
+  ],
+  "notable_divisors": {
+    "D_28": {"ray": 33, "q0": -16, "kappa": 0.04878684, "phi_exp": 0.0, "role": "Top direction"},
+    "D_7":  {"ray": 12, "q0": -32, "kappa": -0.01721050, "phi_exp": 2.165, "role": "Up sector"},
+    "D_12": {"ray": 17, "q0": -16, "kappa": -0.01590463, "phi_exp": 2.329, "role": "Up sector"},
+    "D_9":  {"ray": 14, "q0": -32, "kappa": -0.01113437, "phi_exp": 3.070, "role": "V_us scale"},
+    "D_31": {"ray": 36, "q0": -2,  "kappa": 0.00227399, "phi_exp": 6.371, "role": "V_cb scale"}
+  },
+  "toolchain": {
+    "cgal": "conda installed but cgal-triangulate-4d binary missing",
+    "qhull": "used for triangulation — works with QHull backend for CYTools",
+    "flint": "conda install python-flint resolved the dependency",
+    "total_time_seconds": 60
+  }
+}

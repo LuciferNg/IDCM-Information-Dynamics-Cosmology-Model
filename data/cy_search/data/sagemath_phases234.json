@@ -1,0 +1,8 @@
+{
+  "n_rays_fan": 37,
+  "ambient_picard_rank": 32,
+  "h11_cy": 36,
+  "h11_ambient": 33,
+  "extra_classes": 3,
+  "chow_ideal_ngens": 489
+}

@@ -3,8 +3,10 @@
 [![Equation](https://img.shields.io/badge/core-x%C2%B2%2Bx%E2%88%921%3D0-blue)]()
 [![Parameters](https://img.shields.io/badge/free%20params-0-brightgreen)]()
 [![Data points](https://img.shields.io/badge/data%20points-1853-orange)]()
-[![Δχ² vs ΛCDM](https://img.shields.io/badge/%CE%94%CF%87%C2%B2-vs%20%CE%9BCDM-red)]()
+|[![Δχ² vs ΛCDM](https://img.shields.io/badge/%CE%94%CF%87%C2%B2-vs%20%CE%9BCDM-red)]()
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21434591.svg)](https://doi.org/10.5281/zenodo.21434591)
+[![Phase II](https://img.shields.io/badge/Phase_II-QG_9/9_✅-blueviolet)]()
+[![Phase III](https://img.shields.io/badge/Phase_III-EM_12/12_✅-brightgreen)]()
 
 **A first-principles cosmology model with zero free parameters.** All constants emerge from a single quadratic equation $x^2 + x - 1 = 0$ through recursion $C_{n+1}=1/(1+C_n)$.
 

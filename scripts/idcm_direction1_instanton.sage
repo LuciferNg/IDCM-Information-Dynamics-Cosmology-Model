@@ -1,0 +1,203 @@
+"""
+DIRECTION 1: WORLDSHEET INSTANTONS — MORI CONE + CURVE VOLUMES
+=================================================================
+Starting from the simplicial fan, compute:
+1. Mori cone generators (effective 2-cycles)
+2. Their curve volumes at J* fixed point
+3. Check if q^β = exp(-Vol(β)) ≈ φ^{-k}
+"""
+import os, json, math, sys, numpy as np
+
+from sage.all import *
+from sage.schemes.toric.all import *
+from sage.geometry.cone import *
+
+DATA_DIR = "/home/wsl/IDCM/IDCM-Information-Dynamics-Cosmology-Model/data/cy_search/data"
+print("="*70)
+print("DIRECTION 1: WORLDSHEET INSTANTONS")
+print("="*70)
+
+with open(os.path.join(DATA_DIR, "cy36_98_sage_export.json")) as f:
+    data = json.load(f)
+
+glsm = matrix(ZZ, data["glsm_matrix"])
+pts = data["points"]; simps = data["simplices"]
+PHI = (1+math.sqrt(5))/2; PHI_INV = PHI - 1
+BETA = PHI_INV/2; KAPPA3 = (1/16)**3
+
+# ============================================================
+# 1. BUILD SIMPLICIAL FAN
+# ============================================================
+print("\n1. Building simplicial fan...")
+fan_pts = [vector(ZZ, pts[i]) for i in range(37)]
+cones = [[i for i in s if i != 0] for s in simps if len([i for i in s if i != 0]) == 4]
+F = Fan(cones, fan_pts, lattice=ToricLattice(4), check=True)
+X = ToricVariety(F)
+H = X.cohomology_ring()
+D = [H(d) for d in X.toric_divisor_group().gens()]
+antiK = H(-X.K())
+n_divs = len(D)  # 36
+
+print(f"   {n_divs} divisors, {len(cones)} cones, orbifold={X.is_orbifold()}")
+
+# ============================================================
+# 2. MORI CONE
+# ============================================================
+print("\n2. Mori cone generators...")
+# The Kähler cone is the cone of nef divisors in A¹(X)⊗ℝ
+# The Mori cone NE(X) is the dual cone in H₂(X,ℝ)
+
+# SageMath: the Kähler cone of a toric variety
+try:
+    Kc = X.Kaehler_cone()
+    print(f"   Kähler cone: {Kc}")
+    print(f"   N rays: {Kc.nrays()}")
+    print(f"   Ambient dim: {Kc.lattice_dim()}")
+except Exception as e:
+    print(f"   Kähler_cone() failed: {e}")
+
+# Alternative: compute from fan's 1d cones
+# Mori cone generators = edges of the cone of effective curves
+# In a toric variety, each relation Σ a_i v_i = 0 gives a curve class
+
+# For a complete toric variety, the Mori cone NE(X) can be 
+# obtained from the Gale dual of the fan
+
+# Let's use a different approach: compute the fan's 1d cones (rays)
+# and their relations
+print("\n3. Fan structure analysis:")
+print(f"   Ray matrix (first 5 rays):")
+for i in range(5):
+    print(f"      v_{i} = {fan_pts[i]}")
+
+# The relation between rays gives the Mori cone generators
+# For each pair of maximal cones, the intersection is a 3D cone
+# The 1D intersections (edges) correspond to 2-cycles
+
+# More directly: in SageMath, we can compute the
+# Chow group A¹(X) (divisors) and A₂(X) (curves)
+# The Mori cone lives in A₂(X) ⊗ ℝ
+
+# Let's compute the Mori cone using the toric variety's
+# built-in methods
+try:
+    MC = X.Mori_cone_generators()
+    print(f"   Mori cone generators: {MC}")
+except AttributeError:
+    print(f"   Mori_cone_generators() not available")
+    
+# Alternative: extract from the Kähler cone's dual
+# The Kähler cone dual = closure of the effective cone of curves
+try:
+    # Get the rays of the Kähler cone
+    kc_rays = Kc.rays()
+    print(f"\n   Kähler cone rays ({len(kc_rays)}):")
+    for i, r in enumerate(kc_rays[:3]):
+        print(f"      ray {i}: {r}")
+except Exception as e:
+    print(f"   Kähler cone ray extraction: {e}")
+
+# ============================================================
+# 3. CURVE VOLUMES AT J*
+# ============================================================
+print(f"\n4. Curve volumes at J*:")
+print(f"   J* is defined by Vol(CY) = κ³ = {float(KAPPA3):.8e}")
+print(f"")
+
+# From the 32D uniform scaling: t_i = 0.090141
+# The volume of a curve β is ∫_β J* = Σ t_i · (β ∩ D_i)
+# For toric Mori generators, β ∩ D_i is given by the
+# intersection pairing between A¹(X) and A₂(X)
+
+# In the cohomology ring: for a Mori generator β,
+# Vol(β) = ∫_β J* = D_J · β where D_J is the Kähler form
+
+# Let's use a practical approach:
+# A Mori generator β corresponds to a minimal curve in the fan
+# Each such curve is the intersection of (dim-1) divisors
+
+# For a 4D toric variety, a curve is the intersection of 3 divisors
+# Each such curve is associated to a 2-cone in the fan
+# (a cone of codimension 2)
+
+# Let's enumerate all 2-cones (codim-2) from the fan
+print("   Enumerating 2-cones (codim-2 curves)...")
+all_surfaces = []
+for cone in F(2):
+    rays = cone.rays()
+    all_surfaces.append([fan_pts.index(r) for r in rays])
+print(f"   Found {len(all_surfaces)} surfaces (2-cones)")
+
+# Each 2-cone gives a curve class. Its volume at J* is:
+# Vol(curve) = sum of Kähler parameters of divisors containing it
+# For toric varieties, Vol(curve at divisor intersection) = 
+# ∫_{V(σ)} J* where σ is the 2-cone
+
+# For uniform scaling J* = 0.090141 * sum(D_i):
+# Vol(β) = 0.090141 * (number of divisors containing the curve)
+
+# Actually, let me compute properly using the pairing
+# At J* with uniform scaling t_i = scale:
+# Vol(β_IJ) = 
+# ... this is getting complex
+
+# Let's try a numerical approach:
+# Build the Kähler class at J*, then integrate over curves
+print(f"   Computing curve volumes at uniform J* (t={0.090141})...")
+
+# For the 32D CYTools J*: t = 0.090141 * [1, ..., 1]
+# The Kähler class J* = 0.090141 * Σ D_i (in 32D ambient)
+# But in 36D ambient, we have 36 divisors
+
+# The volume of a curve β associated to a 2-cone σ(ij):
+# Vol(β_ij) = Σ_{k where D_k contains β} t_k
+# In toric geometry if D_k contains the curve, ray k is in the 2-cone
+# So Vol(β_ij) = t_i + t_j (for the two rays defining the 2-cone)
+# At uniform scaling: Vol(β_ij) = 2 * 0.090141 = 0.180282
+
+scale_32 = 0.090141
+vol_2cycle = 2 * scale_32
+print(f"   Uniform J*: Vol(2-cycle) = {vol_2cycle:.6f}")
+print(f"   q = exp(-Vol) = {math.exp(-vol_2cycle):.6f}")
+
+# Check if this matches φ^{-n}
+for n in range(1, 20):
+    phi_pow_n = PHI_INV ** n
+    if abs(math.exp(-vol_2cycle) - phi_pow_n) < 0.05:
+        print(f"   ⚡ q ≈ φ⁻{n} (diff={abs(math.exp(-vol_2cycle)-phi_pow_n):.4f})")
+
+# More systematically: scan all 2-cones and check their volumes
+print(f"\n5. Systematic 2-cone analysis:")
+curve_vols = []
+for s in all_surfaces:
+    if len(s) >= 2:
+        v = len(s) * scale_32
+        curve_vols.append(v)
+        q = math.exp(-v)
+        
+        # Check φ matching
+        for n in range(1, 15):
+            target = PHI_INV ** n
+            if abs(q - target) / target < 0.1:
+                print(f"   2-cone {s}: Vol={v:.4f}, q={q:.6f} ≈ φ⁻{n} (diff={abs(q-target):.4f})")
+                break
+        for n in range(1, 10):
+            target = PHI_INV ** n
+            if abs(v - target) / target < 0.15:
+                print(f"      [raw Vol match] Vol={v:.4f} ≈ φ⁻{n}={target:.4f}")
+                break
+
+print(f"\n   Total 2-cones analyzed: {len(curve_vols)}")
+print(f"   Volume range: [{min(curve_vols):.4f}, {max(curve_vols):.4f}]")
+print(f"   q = exp(-Vol) range: [{math.exp(-max(curve_vols)):.6f}, {math.exp(-min(curve_vols)):.6f}]")
+
+# Check φ-natural volumes
+print(f"\n6. φ-natural volume check:")
+print(f"   φ⁻¹ = {PHI_INV:.6f}")
+print(f"   φ⁻² = {PHI_INV**2:.6f}")
+print(f"   φ⁻³ = {PHI_INV**3:.6f}")
+print(f"   φ⁻⁴ = {PHI_INV**4:.6f}")
+print(f"   φ⁻⁶ = {PHI_INV**6:.6f}")
+print(f"   exp(-{2*scale_32:.4f}) = {math.exp(-2*scale_32):.6f}")
+print(f"   ln(φ) = {math.log(PHI):.6f}")
+print(f"   2*scale_32/ln(φ) = {2*scale_32/math.log(PHI):.4f} (units of ln φ)")

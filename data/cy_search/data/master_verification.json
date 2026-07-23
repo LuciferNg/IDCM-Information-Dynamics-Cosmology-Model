@@ -1,0 +1,94 @@
+{
+  "idcm_formulas": {
+    "V_us": 0.23606797749978967,
+    "V_cb": 0.04175241248038505,
+    "V_ub": 0.0037648126847611655,
+    "V_td": 0.006091594885220309,
+    "V_ts": 0.02580441002518326,
+    "V_tb": 0.9991,
+    "delta_CP": 72.82796214948615
+  },
+  "kappa_ratios": {
+    "V_us": 0.22822486382905957,
+    "V_cb": 0.0413184646533666,
+    "V_ub": 0.0037274283235998636,
+    "V_td": 0.007891612159673276,
+    "V_ts": 0.03945068435108535,
+    "V_tb": 0.994618845261805
+  },
+  "aa_eigenvalue_ratios": {
+    "V_us": 0.2318184173046361,
+    "V_cb": 0.0907002390676797,
+    "V_ub": 0.05992438356210974
+  },
+  "mass_scale_from_kappa": {
+    "m_t": {
+      "divisor": 28,
+      "value": 172.69,
+      "error_pct": 0.0
+    },
+    "m_b": {
+      "divisor": 5,
+      "value": 4.967272752490509,
+      "error_pct": 18.834276375371044
+    },
+    "m_c": {
+      "divisor": 14,
+      "value": 1.2558542629460252,
+      "error_pct": 1.1138375633051036
+    },
+    "m_s": {
+      "divisor": 15,
+      "value": 0.16429447999181268,
+      "error_pct": 76.66073117399213
+    },
+    "m_d": {
+      "divisor": -1,
+      "value": 0,
+      "error_pct": 100.0
+    },
+    "m_u": {
+      "divisor": -1,
+      "value": 0,
+      "error_pct": 100.0
+    },
+    "m_tau": {
+      "divisor": 8,
+      "value": 1.761114631765829,
+      "error_pct": 0.8381401032753925
+    },
+    "m_mu": {
+      "divisor": 15,
+      "value": 0.16429447999181268,
+      "error_pct": 55.43470197900916
+    },
+    "m_e": {
+      "divisor": -1,
+      "value": 0,
+      "error_pct": 100.0
+    }
+  },
+  "delta_CP": {
+    "idcm": 72.83,
+    "pdg": 68.8,
+    "from_kappa_J": 63.12780475410005
+  },
+  "V_td": {
+    "best_divisor_pair": [
+      13,
+      9
+    ],
+    "value": 0.007892,
+    "error_pct": 8.2
+  },
+  "status": {
+    "V_us": "\u2705 1.7% (\u03ba-ratio @ J*)",
+    "V_cb": "\u2705 1.1% (\u03ba-ratio @ J*)",
+    "V_ub": "\u2705 2.7% (\u03ba-ratio @ J*)",
+    "V_td": "\ud83d\udfe1 8.2% (limited divisor candidates)",
+    "V_ts": "\u2705 1.4% (\u03ba-ratio @ J*)",
+    "V_tb": "\u2705 0.5% (\u03ba-ratio @ J*)",
+    "delta_CP": "\ud83d\udfe1 5.9\u00b0 \u2192 {delta_from_kappa:.1f}\u00b0 from \u03ba Jarlskog",
+    "m_H": "\u2705 0.0% (structural)"
+  }
+}
